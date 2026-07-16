@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rapido — Heading Home Mode</title>
+<style>
+  :root{
+    --bg:#0d0f11;
+    --panel:#16191c;
+    --border:#25292d;
+    --text:#e8e6e1;
+    --muted:#8b8f94;
+    --accent:#ffce45;
+    --green:#5fd18a;
+    --font-display:'Georgia', serif;
+    --font-body: -apple-system, Segoe UI, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:56px 24px 80px;}
+  .tag{color:var(--accent);font-size:13px;letter-spacing:.12em;text-transform:uppercase;}
+  h1{
+    font-family:var(--font-display);
+    font-size:34px;
+    margin:10px 0 6px;
+    line-height:1.2;
+  }
+  .sub{color:var(--muted);font-size:15px;margin-bottom:36px;}
+  .sub b{color:var(--text);}
+  section{margin-bottom:34px;}
+  h2{
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    border-bottom:1px solid var(--border);
+    padding-bottom:8px;
+    margin-bottom:14px;
+  }
+  p{color:#cfcdc8;font-size:15.5px;margin:0 0 10px;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin-bottom:10px;
+  }
+  .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;}
+  ul{padding-left:18px;margin:0;}
+  li{color:#cfcdc8;font-size:15px;margin-bottom:6px;}
+  .impact{
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+  .metric{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:8px;padding:14px 16px;flex:1;min-width:150px;
+  }
+  .metric .n{color:var(--green);font-size:20px;font-weight:600;}
+  .metric .l{color:var(--muted);font-size:12px;margin-top:2px;}
+  .note{
+    font-size:13px;color:var(--muted);border-left:2px solid var(--accent);
+    padding-left:12px;margin-top:6px;
+  }
+  .footer{color:var(--muted);font-size:13px;margin-top:50px;border-top:1px solid var(--border);padding-top:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="tag">Product Case Study — Marketplace Matching</div>
+  <h1>Heading Home: Reducing Driver Deadhead on Rapido</h1>
+  <p class="sub">Concept response to a community product pitch, reworked using <b>CIRCLES</b> to stress-test the idea before proposing a build.</p>
+
+  <section>
+    <h2>Problem</h2>
+    <p>Drivers often end their shift by driving home empty with no additional fare, no utilization, pure cost. This pushes drivers to log off earlier than they otherwise would, shrinking supply right when evening demand is still active.</p>
+  </section>
+
+  <section>
+    <h2>Root Cause</h2>
+    <p>It's not that drivers don't want more rides near the end of shift instead it's that today's matching engine is direction-blind. A driver heading home may get matched to a ride that pulls them further away, so going fully offline feels safer than risking a bad match.</p>
+  </section>
+
+  <section>
+    <h2>Users &amp; Conflicting Needs</h2>
+    <div class="card"><div class="label">Driver</div>Earn on the way home, minimal detour</div>
+    <div class="card"><div class="label">Rider</div>Fast match, doesn't care about driver's destination</div>
+    <div class="card"><div class="label">Rapido</div>Higher utilization, lower idle-km, without hurting rider wait time</div>
+  </section>
+
+  <section>
+    <h2>Solution Options Considered</h2>
+    <table>
+      <tr><th>Approach</th><th>Trade-off</th></tr>
+      <tr><td>Hard corridor filter (only show rides toward home)</td><td>Simple, but starves riders in low-density zones</td></tr>
+      <tr><td>Soft bias in matching score</td><td>Balances both sides, chosen for version1 (v1)</td></tr>
+      <tr><td>"One more ride" toggle, no address needed</td><td>Cheapest to build, doesn't target deadhead-km directly</td></tr>
+    </table>
+    <p class="note">Recommendation: soft bias, capped so rider ETA never degrades beyond a small threshold additionally with home location fuzzed to an area, not an exact pin, and abuse checks against gaming the destination input.</p>
+  </section>
+
+  <section>
+    <h2>Guardrails Before Rollout</h2>
+    <ul>
+      <li>Cap rider wait-time increase (e.g. no more than a small % delay)</li>
+      <li>Fuzz driver's home to a zone, not an exact address</li>
+      <li>Detect drivers repeatedly changing "home" to game better rides</li>
+      <li>Always allow full offline as fallback if no match appears in time</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Impact (Success Metrics for A/B Test)</h2>
+    <div class="impact">
+      <div class="metric"><div class="n">↓ Idle km</div><div class="l">per driver, per shift-end</div></div>
+      <div class="metric"><div class="n">↑ Earnings</div><div class="l">last-hour driver earnings</div></div>
+      <div class="metric"><div class="n">→ Rider ETA</div><div class="l">held flat, not degraded</div></div>
+    </div>
+  </section>
+
+  <div class="footer">Concept teardown · Framework: CIRCLES · Not affiliated with Rapido</div>
+
+</div>
+</body>
+</html>
