@@ -1,5 +1,7 @@
 # A Soft Retake on Heading Home Mode for Rapido
 
+🔗 [Live Case Study](https://dishita-b.github.io/Case_Study_Rapido/)
+
 ## Overview
 This isn’t a full case study, just a quick teardown.
 
